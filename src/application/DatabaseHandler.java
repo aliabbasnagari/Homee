@@ -14,16 +14,7 @@ public class DatabaseHandler {
 	private String mysql_password = "1234";
 
 	private DatabaseHandler() {
-		Connection conn = null;
-		try {
-			conn = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
-			if (conn != null) {
-				System.out.println("MSG: COMMECTED!");
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// TODO: if required
 	}
 
 	public static DatabaseHandler getInstance() {
@@ -48,15 +39,19 @@ public class DatabaseHandler {
 					ResultSet qResult = preparedStatement.executeQuery();
 					while (qResult.next()) {
 						User newUser = new User();
+						newUser.setId(qResult.getInt("id"));
 						newUser.setFirstName(qResult.getString("firstname"));
 						newUser.setFirstName(qResult.getString("lastname"));
+						newUser.setCnic(cnic);
+						newUser.setPassword(password);
+						newUser.setBirthDate(qResult.getString("birthdate"));
 					}
 				} catch (SQLException e) {
 					System.out.println(e);
 				}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println(e);
 		}
 		return null;
 	}
