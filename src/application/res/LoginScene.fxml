@@ -2,28 +2,19 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0"
-	prefWidth="1000.0" scaleShape="false"
-	fx:controller="application.LoginController"
-	xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" scaleShape="false" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginController">
 	<children>
-		<TextField fx:id="tfCnic" layoutX="414.0" layoutY="252.0"
-			onAction="#actionGetCnic" prefHeight="44.0" prefWidth="254.0">
+		<TextField fx:id="tfCnic" layoutX="414.0" layoutY="247.0" onAction="#actionGetCnic" prefHeight="44.0" prefWidth="254.0">
 			<font>
 				<Font size="20.0" />
 			</font>
 		</TextField>
-		<Button fx:id="btnLogin" alignment="CENTER"
-			contentDisplay="CENTER" layoutX="487.0" layoutY="446.0"
-			mnemonicParsing="false" onAction="#actionLogin" text="Login"
-			textAlignment="CENTER" textFill="#05e918">
+		<Button fx:id="btnLogin" alignment="CENTER" contentDisplay="CENTER" layoutX="487.0" layoutY="446.0" mnemonicParsing="false" onAction="#actionLogin" text="Login" textAlignment="CENTER" textFill="#05e918">
 			<font>
 				<Font name="Serif Regular" size="27.0" />
 			</font>
@@ -38,18 +29,15 @@
 				<Font size="23.0" />
 			</font>
 		</Label>
-		<TextField fx:id="tfPassword" layoutX="411.0"
-			layoutY="361.0" onAction="#actionGetPassword" prefHeight="44.0"
-			prefWidth="254.0">
-			<font>
-				<Font size="20.0" />
-			</font>
-		</TextField>
-		<Label layoutX="475.0" layoutY="169.0" text="HOMEE"
-			textAlignment="CENTER" textFill="#0089c4">
+		<Label layoutX="475.0" layoutY="169.0" text="HOMEE" textAlignment="CENTER" textFill="#0089c4">
 			<font>
 				<Font name="Tahoma" size="37.0" />
 			</font>
 		</Label>
+      <PasswordField fx:id="tfPassword" layoutX="414.0" layoutY="355.0" prefHeight="44.0" prefWidth="254.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </PasswordField>
 	</children>
 </AnchorPane>
