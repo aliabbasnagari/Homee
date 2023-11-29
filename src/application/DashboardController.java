@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 
 public class DashboardController {
@@ -30,11 +31,11 @@ public class DashboardController {
 			}
 		}
 		dboard.setRooms(rooms);
-		
+
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("res/RoomDeviceScene.fxml"));
 			Parent root = loader.load();
-			//Stage stage = new Stage();
+			// Stage stage = new Stage();
 			Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			currentStage.setScene(new Scene(root));
 			// Show the new stage (window)
@@ -42,5 +43,10 @@ public class DashboardController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@FXML
+	public void actionExitApp(ActionEvent event) {
+		Platform.exit();
 	}
 }

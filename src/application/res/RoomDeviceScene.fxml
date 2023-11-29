@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -26,7 +27,6 @@
 				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 			</rowConstraints>
 			<children>
-				<ListView fx:id="listRooms" prefHeight="200.0" prefWidth="200.0" />
 				<GridPane fx:id="gridDevices" gridLinesVisible="true" GridPane.columnIndex="1">
 					<columnConstraints>
 						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -284,11 +284,44 @@
 						</GridPane>
 					</children>
 				</GridPane>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="553.4000610351562" minHeight="10.0" prefHeight="553.4000610351562" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="300.5999816894531" minHeight="10.0" prefHeight="57.39993896484373" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ListView fx:id="listRooms" prefHeight="200.0" prefWidth="200.0" />
+                  <GridPane GridPane.rowIndex="1">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Back">
+                           <GridPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionExitApp" text="Exit" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </GridPane.margin>
+                        </Button>
+                     </children>
+                  </GridPane>
+               </children>
+            </GridPane>
 			</children>
 		</GridPane>
-      <Label fx:id="labelSeletedRoom" text="Room" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+      <Label fx:id="labelSeletedRoom" text="Room" textFill="#05455e" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
          <font>
-            <Font name="System Italic" size="30.0" />
+            <Font name="System Bold Italic" size="30.0" />
          </font>
       </Label>
 	</children>
