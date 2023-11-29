@@ -32,7 +32,7 @@ public class DashboardController {
 		dboard.setRooms(rooms);
 		
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("res/RoomsScene.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("res/RoomDeviceScene.fxml"));
 			Parent root = loader.load();
 			//Stage stage = new Stage();
 			Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
