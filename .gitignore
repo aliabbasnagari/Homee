@@ -21,3 +21,4 @@ target/
 *.jar
 *.war
 *.ear
+/bin/
