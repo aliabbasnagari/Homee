@@ -1,13 +1,16 @@
+drop database homee;
+create database homee;
+use homee;
 
-
-CREATE TABLE userdata (
+CREATE TABLE Users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     firstName VARCHAR(255),
     lastName VARCHAR(255),
     birthDate DATE,
-    cnic VARCHAR(15),
+    cnic VARCHAR(15) UNIQUE,
     password VARCHAR(255)
 );
+
 CREATE TABLE Statistics (
     id INT PRIMARY KEY AUTO_INCREMENT,
     powerUsage DOUBLE,
@@ -24,6 +27,13 @@ CREATE TABLE Room (
     FOREIGN KEY (roomStatsId) REFERENCES Statistics(id)
 );
 
+INSERT INTO Room (title, powerStatus, notificationStatus, roomStatsId) VALUES
+('Living Room', 1, 0, null),
+('Bedroom', 1, 1, null),
+('Kitchen', 0, 1, null),
+('Bathroom', 1, 0, null);
+
+
 CREATE TABLE CollectiveStatistics (
     id INT PRIMARY KEY AUTO_INCREMENT,
     powerUsage DOUBLE,
@@ -35,9 +45,9 @@ CREATE TABLE Device (
     id INT PRIMARY KEY AUTO_INCREMENT,
     devicename varchar(255),
     powerstatus bit,
-    notificationstatus bit
-    
-    
+    notificationstatus bit,
+    deviceStatsId INT,
+    FOREIGN KEY (deviceStatsId) REFERENCES Statistics(id)
 );
 
 CREATE TABLE CollectiveStatistics_Device (
@@ -71,8 +81,11 @@ CREATE TABLE customer_support (
     closeDate DATETIME,
     queryStatus BOOLEAN
 );
+
 CREATE TABLE homee (
-    id INT AUTO_INCREMENT PRIMARY KEY
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    dashboardId int,
+    FOREIGN KEY (dashboardId) REFERENCES Dashboard(id)
 );
 
 
