@@ -1,10 +1,14 @@
 package application;
 
+import java.util.ArrayList;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import java.util.List;
 
 public class Main extends Application {
 	private int winWidth = 1000;
@@ -15,6 +19,10 @@ public class Main extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource("res/HomeScene.fxml"));
 			Scene scene = new Scene(root, winWidth, winHeight);
 			primaryStage.setScene(scene);
+			
+			List<Image> icons = new ArrayList<>();
+	        icons.add(new Image(getClass().getResourceAsStream("res/app_icon.png")));
+	        primaryStage.getIcons().addAll(icons);
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();

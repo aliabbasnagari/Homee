@@ -7,6 +7,12 @@ public class Dashboard {
 	private String powerMode;
 	private CollectiveStatistics fullStats;
 
+	public Dashboard() {
+		rooms = new ArrayList<Room>();
+		powerMode = "GRID";
+		fullStats = new CollectiveStatistics();
+	}
+
 	public ArrayList<Room> getRooms() {
 		return rooms;
 	}

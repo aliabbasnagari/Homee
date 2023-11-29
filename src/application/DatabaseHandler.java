@@ -24,6 +24,39 @@ public class DatabaseHandler {
 		return dbHandler;
 	}
 
+	public ArrayList<Room> getRooms(final int homeeID) {
+		Connection con = null;
+		try {
+			ArrayList<Room> rooms = new ArrayList<Room>();
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("database is connected successfully");
+				String query = "select * from room";
+				PreparedStatement preparedStatement = con.prepareStatement(query);
+				// preparedStatement.setString(1, cnic);
+				// preparedStatement.setString(2, password);
+				try {
+					ResultSet qResult = preparedStatement.executeQuery();
+					while (qResult.next()) {
+						Room currRoom = new Room();
+						currRoom.setId(qResult.getInt("id"));
+						currRoom.setTitle(qResult.getString("title"));
+						currRoom.setPowerStatus(qResult.getInt("powerStatus") == 1);
+						currRoom.setNotificationStatus(qResult.getInt("notificationStatus") == 1);
+						rooms.add(currRoom);
+					}
+					return rooms;
+				} catch (SQLException e) {
+					System.out.println(e);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+
 	public User getUser(String cnic, String password) {
 		Connection con = null;
 		try {
