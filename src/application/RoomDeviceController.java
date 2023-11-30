@@ -1,5 +1,6 @@
 package application;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,12 +11,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.stage.Stage;
 
 public class RoomDeviceController implements Initializable {
 	@FXML
@@ -54,6 +60,31 @@ public class RoomDeviceController implements Initializable {
 		System.out.println(clickedButton.getUserData());
 		labelSeletedRoom.setText(clickedButton.getUserData().toString());
 
+	}
+
+	@FXML
+	private void actionGotoAddRoom(ActionEvent event) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("res/AddRoomScene.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void actionGotoDashboard(ActionEvent event) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("res/DashboardScene.fxml"));
+			Parent root = loader.load();
+			Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			currentStage.setScene(new Scene(root));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML

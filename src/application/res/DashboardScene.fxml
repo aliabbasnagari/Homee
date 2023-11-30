@@ -39,7 +39,7 @@
 								<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 							</rowConstraints>
 							<children>
-								<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Add Room">
+								<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Grid">
 									<GridPane.margin>
 										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 									</GridPane.margin>
@@ -47,7 +47,7 @@
                               <Font size="24.0" />
                            </font>
 								</Button>
-								<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Update Room" GridPane.rowIndex="1">
+								<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Solar" GridPane.rowIndex="1">
 									<GridPane.margin>
 										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 									</GridPane.margin>
@@ -55,7 +55,7 @@
                               <Font size="24.0" />
                            </font>
 								</Button>
-								<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Delete Room" GridPane.rowIndex="2">
+								<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Hybrid" GridPane.rowIndex="2">
 									<GridPane.margin>
 										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 									</GridPane.margin>
@@ -89,7 +89,7 @@
 								<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 							</GridPane.margin>
 						</Button>
-						<Button fx:id="btnRooms" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnShowRooms" text="Room" GridPane.columnIndex="1">
+						<Button fx:id="btnRooms" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnShowRooms" text="Rooms" GridPane.columnIndex="1">
 							<GridPane.margin>
 								<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 							</GridPane.margin>

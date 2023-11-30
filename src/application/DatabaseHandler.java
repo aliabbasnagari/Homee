@@ -24,6 +24,34 @@ public class DatabaseHandler {
 		return dbHandler;
 	}
 
+	public boolean addNewUser(User user) {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("database is connected successfully");
+				String query = "insert into users(firstname, lastname, birthdate, cnic, password) values (?, ?, ?, ?, ?);";
+				PreparedStatement preparedStatement = con.prepareStatement(query);
+				preparedStatement.setString(1, user.getFirstName());
+				preparedStatement.setString(2, user.getLastName());
+				preparedStatement.setString(3, user.getBirthDate());
+				preparedStatement.setString(4, user.getCnic());
+				preparedStatement.setString(5, user.getPassword());
+				try {
+					int affected = preparedStatement.executeUpdate();
+					if (affected > 0)
+						return true;
+				} catch (SQLException e) {
+					System.out.println(e);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return false;
+	}
+
 	public ArrayList<Room> getRooms(final int homeeID) {
 		Connection con = null;
 		try {
@@ -64,13 +92,13 @@ public class DatabaseHandler {
 			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
 			if (con != null) {
 				System.out.println("database is connected successfully");
-				String query = "select * from user where cnic = ? and password = ?";
+				String query = "select * from users where cnic = ? and password = ?";
 				PreparedStatement preparedStatement = con.prepareStatement(query);
 				preparedStatement.setString(1, cnic);
 				preparedStatement.setString(2, password);
 				try {
 					ResultSet qResult = preparedStatement.executeQuery();
-					while (qResult.next()) {
+					if (qResult.next()) {
 						User newUser = new User();
 						newUser.setId(qResult.getInt("id"));
 						newUser.setFirstName(qResult.getString("firstname"));
@@ -78,6 +106,7 @@ public class DatabaseHandler {
 						newUser.setCnic(cnic);
 						newUser.setPassword(password);
 						newUser.setBirthDate(qResult.getString("birthdate"));
+						return newUser;
 					}
 				} catch (SQLException e) {
 					System.out.println(e);
@@ -89,4 +118,37 @@ public class DatabaseHandler {
 		return null;
 	}
 
+	public ArrayList<Integer> getHomeeID(int userID) {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("database is connected successfully");
+				String query = "select hom.id from userhomee uhom join users usr on usr.id = uhom.userid "
+						+ " join homee hom on hom.id = uhom.homeeid where uhom.userid = ?;";
+				PreparedStatement preparedStatement = con.prepareStatement(query);
+				preparedStatement.setInt(1, userID);
+				try {
+					ArrayList<Integer> homId = new ArrayList<>();
+					ResultSet qResult = preparedStatement.executeQuery();
+					while (qResult.next()) {
+						homId.add(qResult.getInt("id"));
+						System.out.println(qResult.getInt("id"));
+					}
+					return homId;
+				} catch (SQLException e) {
+					System.out.println(e);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
+	public void createNewHomee(int userID) {
+		
+		
+	}
 }
