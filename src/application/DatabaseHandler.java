@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DatabaseHandler {
@@ -109,11 +110,11 @@ public class DatabaseHandler {
 						return newUser;
 					}
 				} catch (SQLException e) {
-					System.out.println(e);
+					System.out.println("EXCEPTION >>> " + e);
 				}
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println("EXCEPTION >>> " + e);
 		}
 		return null;
 	}
@@ -146,9 +147,106 @@ public class DatabaseHandler {
 		}
 		return null;
 	}
-	
-	public void createNewHomee(int userID) {
-		
-		
+
+	private int insertIntoCollectiveStats() {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("database is connected successfully");
+				String query = "insert into collectivestatistics(powerUsage, powerSaved) values (?, ?);";
+				PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setDouble(1, 0);
+				preparedStatement.setDouble(2, 0);
+				try {
+					int affected = preparedStatement.executeUpdate();
+					if (affected > 0) {
+						try (ResultSet statsKeys = preparedStatement.getGeneratedKeys()) {
+							if (statsKeys.next()) {
+								return statsKeys.getInt(1);
+							}
+						}
+					}
+				} catch (Exception e) {
+					System.out.println("EXCEPTION >>> " + e);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("EXCEPTION >>> " + e);
+		}
+		return -1;
+	};
+
+	private int insertIntoDashboard(int statsID) {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("database is connected successfully");
+				String query = "insert into dashboard(powermode, fullstatsid) values (?, ?);";
+				PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setString(1, "GRID");
+				preparedStatement.setDouble(2, statsID);
+				try {
+					int affected = preparedStatement.executeUpdate();
+					if (affected > 0) {
+						try (ResultSet statsKeys = preparedStatement.getGeneratedKeys()) {
+							if (statsKeys.next()) {
+								return statsKeys.getInt(1);
+							}
+						}
+					}
+				} catch (Exception e) {
+					System.out.println("EXCEPTION >>> " + e);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("EXCEPTION >>> " + e);
+		}
+		return -1;
+	};
+
+	public boolean createNewHomee(int userID) {
+		int statid = insertIntoCollectiveStats();
+		if (statid == -1) {
+			return false;
+		}
+		int dashid = insertIntoDashboard(statid);
+		if (dashid == -1) {
+			return false;
+		}
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("database is connected successfully");
+				String query = "insert into homee(dashboardId) values (?);";
+				PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setInt(1, dashid);
+				int affected = preparedStatement.executeUpdate();
+				if (affected > 0) {
+					try (ResultSet homeeKeys = preparedStatement.getGeneratedKeys()) {
+						if (homeeKeys.next()) {
+							int homeeID = homeeKeys.getInt(1);
+							query = "insert into userhomee(userid, homeeid) values (?, ?);";
+							preparedStatement = con.prepareStatement(query);
+							preparedStatement.setInt(1, userID);
+							preparedStatement.setInt(2, homeeID);
+							affected = preparedStatement.executeUpdate();
+							if (affected > 0) {
+								return true;
+							}
+						}
+					}
+				}
+				return false;
+			}
+		} catch (Exception e) {
+			System.out.println("EXCEPTION >>> " + e);
+		}
+		return false;
 	}
 }
