@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class RoomDeviceController implements Initializable {
@@ -34,7 +35,29 @@ public class RoomDeviceController implements Initializable {
 	@FXML
 	private TextField tfRoomTitle;
 
-	private Room selectedRoom;
+	@FXML
+	private GridPane gridDevices;
+
+	@FXML
+	private Label labelD0;
+	@FXML
+	private Label labelD1;
+	@FXML
+	private Label labelD2;
+	@FXML
+	private Label labelD3;
+	@FXML
+	private Label labelD4;
+	@FXML
+	private Label labelD5;
+	@FXML
+	private Label labelD6;
+	@FXML
+	private Label labelD7;
+	@FXML
+	private Label labelD8;
+
+	public Room selectedRoom;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -57,13 +80,30 @@ public class RoomDeviceController implements Initializable {
 			if (rooms.size() > 0) {
 				selectedRoom = rooms.get(0);
 				tfRoomTitle.setText(rooms.get(0).getTitle());
+				loadDevices();
+				gridDevices.setDisable(false);
 			} else {
 				selectedRoom = null;
 				tfRoomTitle.setText("");
+				gridDevices.setDisable(true);
+
 			}
 			ObservableList<Button> observableList = FXCollections.observableArrayList(roomButtons);
 			listRooms.setItems(observableList);
 		}
+	}
+
+	private void loadDevices() {
+		Device[] devices = selectedRoom.getDevices();
+		labelD0.setText(devices[0].toString());
+		labelD1.setText(devices[1].toString());
+		labelD2.setText(devices[2].toString());
+		labelD3.setText(devices[3].toString());
+		labelD4.setText(devices[4].toString());
+		labelD5.setText(devices[5].toString());
+		labelD6.setText(devices[6].toString());
+		labelD7.setText(devices[7].toString());
+		labelD8.setText(devices[8].toString());
 	}
 
 	private void btnPress(ActionEvent e) {
@@ -71,7 +111,7 @@ public class RoomDeviceController implements Initializable {
 		selectedRoom = (Room) clickedButton.getUserData();
 		System.out.println(clickedButton.getId() + " <btn> " + selectedRoom.getTitle());
 		tfRoomTitle.setText(selectedRoom.getTitle());
-
+		loadDevices();
 	}
 
 	@FXML
@@ -116,6 +156,23 @@ public class RoomDeviceController implements Initializable {
 			Dashboard.getInstance().getRooms().removeIf(room -> room.getId() == rid);
 			new HomeeAlerts(new SuccessAlert(null, "Success!", "Room Deleted!"));
 			loadRooms();
+		}
+	}
+
+	@FXML
+	private void actionModifyDevice(ActionEvent event) {
+		Button modifyBtn = (Button) event.getSource();
+		String btnID = modifyBtn.getId().substring(1, 2);
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("res/ModifyDeviceScene.fxml"));
+			Parent root = loader.load();
+			((ModifyDeviceController) loader.getController()).setDeviceID(Integer.valueOf(btnID));
+			((ModifyDeviceController) loader.getController()).setRoomDeviceController(this);
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

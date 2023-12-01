@@ -5,7 +5,13 @@ public class Room {
 	private String title;
 	private boolean powerStatus;
 	private boolean notificationStatus;
-	private Statistics roomStats;
+	private Device[] devices = new Device[9];
+
+	public Room() {
+		for (int i = 0; i < devices.length; i++) {
+			devices[i] = new Device();
+		}
+	}
 
 	public int getId() {
 		return id;
@@ -39,11 +45,12 @@ public class Room {
 		this.notificationStatus = notificationStatus;
 	}
 
-	public Statistics getRoomStats() {
-		return roomStats;
+	public Device[] getDevices() {
+		return devices;
 	}
 
-	public void setRoomStats(Statistics roomStats) {
-		this.roomStats = roomStats;
+	public void setDevices(Device[] devices) {
+		this.devices = devices;
 	}
+
 }

@@ -14,7 +14,7 @@ public class AddRoomController {
 	@FXML
 	private Button btnAddRoom;
 
-	private RoomDeviceController roomCont;
+	private RoomDeviceController roomDeviceController;
 
 	// Event Listener on Button[#btnAddRoom].onAction
 	@FXML
@@ -25,16 +25,16 @@ public class AddRoomController {
 		DatabaseHandler db = DatabaseHandler.getInstance();
 		if (db.createNewRoom(Dashboard.getInstance().getId(), tfRoomTitle.getText())) {
 			new HomeeAlerts(new SuccessAlert(null, "Success!", "Successfully added the room!"));
-			roomCont.loadRooms();
+			roomDeviceController.loadRooms();
 		}
 	}
 
 	public RoomDeviceController getRoomController() {
-		return roomCont;
+		return roomDeviceController;
 	}
 
 	public void setRoomController(RoomDeviceController roomCont) {
-		this.roomCont = roomCont;
+		this.roomDeviceController = roomCont;
 	}
 
 }

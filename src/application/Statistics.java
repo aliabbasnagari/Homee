@@ -1,11 +1,13 @@
 package application;
 
 public class Statistics {
+	private int id;
 	private double powerUsage;
 	private double temperature;
 	private double humidity;
 
 	public Statistics() {
+		id = -1;
 		powerUsage = 0;
 		temperature = 0;
 		humidity = 0;
@@ -33,6 +35,14 @@ public class Statistics {
 
 	public void setHumidity(double humidity) {
 		this.humidity = humidity;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

@@ -73,6 +73,7 @@ public class DatabaseHandler {
 						currRoom.setTitle(qResult.getString("title"));
 						currRoom.setPowerStatus(qResult.getInt("powerStatus") == 1);
 						currRoom.setNotificationStatus(qResult.getInt("notificationStatus") == 1);
+						currRoom.setDevices(getDevices(currRoom.getId()));
 						rooms.add(currRoom);
 					}
 					return rooms;
@@ -391,6 +392,151 @@ public class DatabaseHandler {
 				int affected = preparedStatement.executeUpdate();
 				if (affected > 0) {
 					return true;
+				}
+				return false;
+			}
+		} catch (Exception e) {
+			System.out.println("EXCEPTION >>> " + e);
+		}
+		return false;
+	}
+
+	private int insertIntoStatistics() {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("insertIntoStatistics: database is connected successfully");
+				String query = "insert into statistics(powerUsage, temperature, humidity) values (?, ?, ?);";
+				PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setDouble(1, 0);
+				preparedStatement.setDouble(2, 0);
+				preparedStatement.setDouble(3, 0);
+				try {
+					int affected = preparedStatement.executeUpdate();
+					if (affected > 0) {
+						try (ResultSet statsKeys = preparedStatement.getGeneratedKeys()) {
+							if (statsKeys.next()) {
+								return statsKeys.getInt(1);
+							}
+						}
+					}
+				} catch (Exception e) {
+					System.out.println("EXCEPTION >>> " + e);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("EXCEPTION >>> " + e);
+		}
+		return -1;
+	};
+
+	public Device[] getDevices(int roomID) {
+		Device[] devices = new Device[9];
+		for (int i = 0; i < devices.length; i++) {
+			devices[i] = new Device();
+		}
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("getDevices: database is connected successfully");
+				String query = "select d.* from RoomDevice rd join device d on d.id = rd.deviceid "
+						+ " where rd.roomid = ?;";
+				PreparedStatement preparedStatement = con.prepareStatement(query);
+				preparedStatement.setInt(1, roomID);
+				try {
+					ResultSet qResult = preparedStatement.executeQuery();
+					int i = 0;
+					while (qResult.next() && i < 10) {
+						devices[i].setId(qResult.getInt("id"));
+						devices[i].setName(qResult.getString("devicename"));
+						devices[i].setPower(qResult.getBoolean("powerStatus"));
+						devices[i].setNotification(qResult.getBoolean("notificationStatus"));
+						query = "select * from statistics where id = ?;";
+						preparedStatement = con.prepareStatement(query);
+						preparedStatement.setInt(1, qResult.getInt("deviceStatsId"));
+						ResultSet qResult2 = preparedStatement.executeQuery();
+						if (qResult2.next()) {
+							devices[i].getDeviceStats().setId(qResult2.getInt("id"));
+							devices[i].getDeviceStats().setPowerUsage(qResult2.getDouble("powerUsage"));
+							devices[i].getDeviceStats().setTemperature(qResult2.getDouble("temperature"));
+							devices[i].getDeviceStats().setHumidity(qResult2.getDouble("humidity"));
+						}
+						i++;
+					}
+				} catch (SQLException e) {
+					System.out.println(e);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return devices;
+	}
+
+	public boolean createNewDevice(int roomId, Device device) {
+		int statsid = insertIntoStatistics();
+		device.getDeviceStats().setId(statsid);
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("createNewDevice: database is connected successfully");
+				String query = "insert into device(id, devicename, powerStatus, notificationStatus, deviceStatsId) values (?, ?, ?, ?, ?);";
+				PreparedStatement preparedStatement = con.prepareStatement(query);
+				preparedStatement.setInt(1, device.getId());
+				preparedStatement.setString(2, device.getName());
+				preparedStatement.setBoolean(3, device.isON());
+				preparedStatement.setBoolean(4, device.isNotificationON());
+				preparedStatement.setInt(5, statsid);
+				int affected = preparedStatement.executeUpdate();
+				if (affected > 0) {
+					query = "insert into RoomDevice(roomid, deviceid) values (?, ?);";
+					preparedStatement = con.prepareStatement(query);
+					preparedStatement.setInt(1, roomId);
+					preparedStatement.setInt(2, device.getId());
+					affected = preparedStatement.executeUpdate();
+					if (affected > 0) {
+						return true;
+					}
+				}
+				return false;
+			}
+		} catch (Exception e) {
+			System.out.println("EXCEPTION >>> " + e);
+		}
+		return false;
+	}
+
+	public boolean updateDevice(Device device) {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("updateDevice: database is connected successfully");
+				String query = "UPDATE device SET devicename = ?, powerStatus = ?, notificationStatus = ? WHERE id = ?;";
+				PreparedStatement preparedStatement = con.prepareStatement(query);
+				preparedStatement.setString(1, device.getName());
+				preparedStatement.setBoolean(2, device.isON());
+				preparedStatement.setBoolean(3, device.isNotificationON());
+				preparedStatement.setInt(4, device.getId());
+				int affected = preparedStatement.executeUpdate();
+				if (affected > 0) {
+					query = "update statistics set powerUsage = ?, temperature = ?, humidity = ? where id = ?;";
+					preparedStatement = con.prepareStatement(query);
+					preparedStatement.setDouble(1, device.getDeviceStats().getPowerUsage());
+					preparedStatement.setDouble(2, device.getDeviceStats().getTemperature());
+					preparedStatement.setDouble(3, device.getDeviceStats().getHumidity());
+					preparedStatement.setInt(4, device.getDeviceStats().getId());
+					affected = preparedStatement.executeUpdate();
+					if (affected > 0) {
+						return true;
+					}
 				}
 				return false;
 			}

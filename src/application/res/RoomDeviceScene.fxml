@@ -41,7 +41,7 @@
 						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 					</rowConstraints>
 					<children>
-						<GridPane style="-fx-padding: 10;">
+						<GridPane fx:id="grid0" style="-fx-padding: 10;">
 							<columnConstraints>
 								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 							</columnConstraints>
@@ -64,11 +64,11 @@
 										<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="OFF" GridPane.columnIndex="1" />
 									</children>
 								</GridPane>
-								<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="modify" />
-								<Label text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+								<Button fx:id="D0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionModifyDevice" text="modify" />
+								<Label fx:id="labelD0" text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
 							</children>
 						</GridPane>
-						<GridPane layoutX="10.0" layoutY="10.0" style="-fx-padding: 10;" GridPane.columnIndex="1">
+						<GridPane fx:id="grid1" layoutX="10.0" layoutY="10.0" style="-fx-padding: 10;" GridPane.columnIndex="1">
 							<columnConstraints>
 								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 							</columnConstraints>
@@ -91,11 +91,11 @@
 										<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="OFF" GridPane.columnIndex="1" />
 									</children>
 								</GridPane>
-								<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="modify" />
-								<Label text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+								<Button fx:id="D1" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionModifyDevice" text="modify" />
+								<Label fx:id="labelD1" text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
 							</children>
 						</GridPane>
-						<GridPane style="-fx-padding: 10;" GridPane.columnIndex="2">
+						<GridPane fx:id="grid2" style="-fx-padding: 10;" GridPane.columnIndex="2">
 							<columnConstraints>
 								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 							</columnConstraints>
@@ -118,11 +118,11 @@
 										<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="OFF" GridPane.columnIndex="1" />
 									</children>
 								</GridPane>
-								<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="modify" />
-								<Label text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+								<Button fx:id="D2" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionModifyDevice" text="modify" />
+								<Label fx:id="labelD2" text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
 							</children>
 						</GridPane>
-						<GridPane style="-fx-padding: 10;" GridPane.rowIndex="1">
+						<GridPane fx:id="grid3" style="-fx-padding: 10;" GridPane.rowIndex="1">
 							<columnConstraints>
 								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 							</columnConstraints>
@@ -145,11 +145,11 @@
 										<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="OFF" GridPane.columnIndex="1" />
 									</children>
 								</GridPane>
-								<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="modify" />
-								<Label text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+								<Button fx:id="D3" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionModifyDevice" text="modify" />
+								<Label fx:id="labelD3" text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
 							</children>
 						</GridPane>
-						<GridPane style="-fx-padding: 10;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+						<GridPane fx:id="grid4" style="-fx-padding: 10;" GridPane.columnIndex="1" GridPane.rowIndex="1">
 							<columnConstraints>
 								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 							</columnConstraints>
@@ -172,11 +172,11 @@
 										<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="OFF" GridPane.columnIndex="1" />
 									</children>
 								</GridPane>
-								<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="modify" />
-								<Label text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+								<Button fx:id="D4" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionModifyDevice" text="modify" />
+								<Label fx:id="labelD4" text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
 							</children>
 						</GridPane>
-						<GridPane style="-fx-padding: 10;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+						<GridPane fx:id="grid5" style="-fx-padding: 10;" GridPane.columnIndex="2" GridPane.rowIndex="1">
 							<columnConstraints>
 								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 							</columnConstraints>
@@ -199,11 +199,11 @@
 										<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="OFF" GridPane.columnIndex="1" />
 									</children>
 								</GridPane>
-								<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="modify" />
-								<Label text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+								<Button fx:id="D5" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionModifyDevice" text="modify" />
+								<Label fx:id="labelD5" text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
 							</children>
 						</GridPane>
-						<GridPane style="-fx-padding: 10;" GridPane.rowIndex="2">
+						<GridPane fx:id="grid6" style="-fx-padding: 10;" GridPane.rowIndex="2">
 							<columnConstraints>
 								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 							</columnConstraints>
@@ -226,11 +226,11 @@
 										<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="OFF" GridPane.columnIndex="1" />
 									</children>
 								</GridPane>
-								<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="modify" />
-								<Label text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+								<Button fx:id="D6" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionModifyDevice" text="modify" />
+								<Label fx:id="labelD6" text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
 							</children>
 						</GridPane>
-						<GridPane style="-fx-padding: 10;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+						<GridPane fx:id="grid7" style="-fx-padding: 10;" GridPane.columnIndex="1" GridPane.rowIndex="2">
 							<columnConstraints>
 								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 							</columnConstraints>
@@ -253,11 +253,11 @@
 										<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="OFF" GridPane.columnIndex="1" />
 									</children>
 								</GridPane>
-								<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="modify" />
-								<Label text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+								<Button fx:id="D7" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionModifyDevice" text="modify" />
+								<Label fx:id="labelD7" text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
 							</children>
 						</GridPane>
-						<GridPane style="-fx-padding: 10;" GridPane.columnIndex="2" GridPane.rowIndex="2">
+						<GridPane fx:id="grid8" style="-fx-padding: 10;" GridPane.columnIndex="2" GridPane.rowIndex="2">
 							<columnConstraints>
 								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 							</columnConstraints>
@@ -280,8 +280,8 @@
 										<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="OFF" GridPane.columnIndex="1" />
 									</children>
 								</GridPane>
-								<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="modify" />
-								<Label text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+								<Button fx:id="D8" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#actionModifyDevice" text="modify" />
+								<Label fx:id="labelD8" text="Empty Slot" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
 							</children>
 						</GridPane>
 					</children>

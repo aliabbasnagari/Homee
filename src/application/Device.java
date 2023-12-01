@@ -7,6 +7,14 @@ public class Device {
 	private boolean notificationStatus;
 	private Statistics deviceStats;
 
+	public Device() {
+		id = -1;
+		name = "Empty Slot";
+		powerStatus = false;
+		notificationStatus = false;
+		deviceStats = new Statistics();
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -28,7 +36,9 @@ public class Device {
 	}
 
 	public void setPower(boolean powerStatus) {
+
 		this.powerStatus = powerStatus;
+
 	}
 
 	public boolean isNotificationON() {
@@ -36,7 +46,9 @@ public class Device {
 	}
 
 	public void setNotification(boolean notificationStatus) {
+
 		this.notificationStatus = notificationStatus;
+
 	}
 
 	public Statistics getDeviceStats() {
@@ -45,6 +57,15 @@ public class Device {
 
 	public void setDeviceStats(Statistics deviceStats) {
 		this.deviceStats = deviceStats;
+	}
+
+	@Override
+	public String toString() {
+		if (id != -1)
+			return String.format("%s\n Temp(%f⁰C)   Humid(%f)", name, deviceStats.getTemperature(),
+					deviceStats.getHumidity());
+		else
+			return String.format("%s", name);
 	}
 
 }
