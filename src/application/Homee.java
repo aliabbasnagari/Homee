@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 public class Homee {
 	private static Homee _homee;
+	private int id;
 	private User currentUser;
+	private String title;
 	private ArrayList<User> users;
 	private Dashboard dashboard;
 	private Payment payment;
@@ -12,7 +14,7 @@ public class Homee {
 	private Homee() {
 		currentUser = null;
 		users = new ArrayList<User>();
-		dashboard = new Dashboard();
+		dashboard = Dashboard.getInstance();
 		payment = new Payment();
 	}
 
@@ -21,6 +23,14 @@ public class Homee {
 			_homee = new Homee();
 		}
 		return _homee;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public User getCurrentUser() {
@@ -53,6 +63,14 @@ public class Homee {
 
 	public void setPayment(Payment payment) {
 		this.payment = payment;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 }

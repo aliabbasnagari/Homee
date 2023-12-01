@@ -23,19 +23,19 @@ public class Device {
 		this.name = name;
 	}
 
-	public boolean isPowerStatus() {
+	public boolean isON() {
 		return powerStatus;
 	}
 
-	public void setPowerStatus(boolean powerStatus) {
+	public void setPower(boolean powerStatus) {
 		this.powerStatus = powerStatus;
 	}
 
-	public boolean isNotificationStatus() {
+	public boolean isNotificationON() {
 		return notificationStatus;
 	}
 
-	public void setNotificationStatus(boolean notificationStatus) {
+	public void setNotification(boolean notificationStatus) {
 		this.notificationStatus = notificationStatus;
 	}
 

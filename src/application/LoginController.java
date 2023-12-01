@@ -31,11 +31,11 @@ public class LoginController {
 		String cnic = tfCnic.getText();
 		String password = tfPassword.getText();
 		if (!cnic.matches("\\d{5}-\\d{7}-\\d")) {
-			showAlert("Failed", "Invalid Cnic!");
+			new HomeeAlerts(new FailureAlert(null, "Failed!", "Invalid Cnic!"));
 			return;
 		}
 		if (password.isBlank()) {
-			showAlert("Failed", "Password is required!");
+			new HomeeAlerts(new FailureAlert(null, "Failed!", "Password is required!"));
 			return;
 		}
 		DatabaseHandler db = DatabaseHandler.getInstance();
@@ -52,7 +52,7 @@ public class LoginController {
 				e.printStackTrace();
 			}
 		} else {
-			showAlert("Login Failed", "Invalid credentials!");
+			new HomeeAlerts(new FailureAlert(null, "Login Failed!", "Invalid credentials!"));
 			return;
 		}
 	}
@@ -68,13 +68,5 @@ public class LoginController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	private void showAlert(String title, String message) {
-		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle(title);
-		alert.setHeaderText(null);
-		alert.setContentText(message);
-		alert.showAndWait();
 	}
 }

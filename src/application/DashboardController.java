@@ -21,25 +21,29 @@ public class DashboardController {
 	// Event Listener on Button[#btnRooms].onAction
 	@FXML
 	public void btnShowRooms(ActionEvent event) {
-		DatabaseHandler handler = DatabaseHandler.getInstance();
 		Homee homee = Homee.getInstance();
 		Dashboard dboard = homee.getDashboard();
-		ArrayList<Room> rooms = handler.getRooms(0);
+		ArrayList<Room> rooms = dboard.getRooms();
 		if (rooms != null) {
-			for (int i = 0; i < rooms.size(); i++) {
-				System.out.println(rooms.get(i).getTitle());
-			}
+			dboard.setRooms(rooms);
 		}
-		dboard.setRooms(rooms);
-
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("res/RoomDeviceScene.fxml"));
 			Parent root = loader.load();
-			// Stage stage = new Stage();
 			Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			currentStage.setScene(new Scene(root));
-			// Show the new stage (window)
-			// stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void actionGotoHome(ActionEvent event) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("res/HomeScene.fxml"));
+			Parent root = loader.load();
+			Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			currentStage.setScene(new Scene(root));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

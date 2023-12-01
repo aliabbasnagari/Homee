@@ -9,49 +9,32 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-
-<GridPane fx:controller="application.AddRoomController"
-	maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-	minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0"
-	xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AddRoomController">
 	<columnConstraints>
-		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
-			prefWidth="100.0" />
+		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 	</columnConstraints>
 	<rowConstraints>
-		<RowConstraints maxHeight="292.3999847412109"
-			minHeight="10.0" prefHeight="120.40001220703125" vgrow="SOMETIMES" />
-		<RowConstraints maxHeight="344.00000228881834"
-			minHeight="10.0" prefHeight="180.39998779296877" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="292.3999847412109" minHeight="10.0" prefHeight="120.40001220703125" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="344.00000228881834" minHeight="10.0" prefHeight="180.39998779296877" vgrow="SOMETIMES" />
 	</rowConstraints>
 	<children>
 		<GridPane GridPane.rowIndex="1">
 			<columnConstraints>
-				<ColumnConstraints hgrow="SOMETIMES"
-					maxWidth="294.4000244140625" minWidth="10.0"
-					prefWidth="100.39998779296874" />
-				<ColumnConstraints hgrow="SOMETIMES"
-					maxWidth="482.4000244140625" minWidth="10.0"
-					prefWidth="400.4000122070312" />
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="294.4000244140625" minWidth="10.0" prefWidth="100.39998779296874" />
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="482.4000244140625" minWidth="10.0" prefWidth="400.4000122070312" />
 			</columnConstraints>
 			<rowConstraints>
-				<RowConstraints maxHeight="147.9999755859375"
-					minHeight="10.0" prefHeight="140.79999389648438" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="176.00000610351563"
-					minHeight="10.0" prefHeight="168.00000610351563" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="147.9999755859375" minHeight="10.0" prefHeight="140.79999389648438" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="176.00000610351563" minHeight="10.0" prefHeight="168.00000610351563" vgrow="SOMETIMES" />
 			</rowConstraints>
 			<children>
 				<Label text="Room Title" GridPane.halignment="CENTER" />
-				<TextField fx:id="tbRoomTitle" GridPane.columnIndex="1">
+				<TextField fx:id="tfRoomTitle" GridPane.columnIndex="1">
 					<GridPane.margin>
 						<Insets right="50.0" />
 					</GridPane.margin>
 				</TextField>
-				<Button fx:id="btnAddRoom" mnemonicParsing="false"
-					onAction="#actionAddRoom" text="Add" GridPane.columnIndex="1"
-					GridPane.halignment="CENTER" GridPane.rowIndex="1"
-					GridPane.valignment="TOP">
+				<Button fx:id="btnAddRoom" mnemonicParsing="false" onAction="#actionAddRoom" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
 					<GridPane.margin>
 						<Insets right="50.0" />
 					</GridPane.margin>

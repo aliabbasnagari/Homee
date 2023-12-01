@@ -2,8 +2,14 @@ package application;
 
 public class Statistics {
 	private double powerUsage;
-	private double powerSaved;
-	private String powerSource;
+	private double temperature;
+	private double humidity;
+
+	public Statistics() {
+		powerUsage = 0;
+		temperature = 0;
+		humidity = 0;
+	}
 
 	public double getPowerUsage() {
 		return powerUsage;
@@ -13,20 +19,20 @@ public class Statistics {
 		this.powerUsage = powerUsage;
 	}
 
-	public double getPowerSaved() {
-		return powerSaved;
+	public double getTemperature() {
+		return temperature;
 	}
 
-	public void setPowerSaved(double powerSaved) {
-		this.powerSaved = powerSaved;
+	public void setTemperature(double temperature) {
+		this.temperature = temperature;
 	}
 
-	public String getPowerSource() {
-		return powerSource;
+	public double getHumidity() {
+		return humidity;
 	}
 
-	public void setPowerSource(String powerSource) {
-		this.powerSource = powerSource;
+	public void setHumidity(double humidity) {
+		this.humidity = humidity;
 	}
 
 }
