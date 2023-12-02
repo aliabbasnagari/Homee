@@ -21,7 +21,7 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			
 			List<Image> icons = new ArrayList<>();
-	        icons.add(new Image(getClass().getResourceAsStream("res/app_icon.png")));
+	        icons.add(new Image(getClass().getResourceAsStream("res/img/app_icon.png")));
 	        primaryStage.getIcons().addAll(icons);
 			primaryStage.show();
 		} catch (Exception e) {

@@ -435,7 +435,7 @@ public class DatabaseHandler {
 	public Device[] getDevices(int roomID) {
 		Device[] devices = new Device[9];
 		for (int i = 0; i < devices.length; i++) {
-			devices[i] = new Device();
+			devices[i] = new Device(i);
 		}
 		Connection con = null;
 		try {
@@ -451,10 +451,11 @@ public class DatabaseHandler {
 					ResultSet qResult = preparedStatement.executeQuery();
 					int i = 0;
 					while (qResult.next() && i < 10) {
-						devices[i].setId(qResult.getInt("id"));
-						devices[i].setName(qResult.getString("devicename"));
-						devices[i].setPower(qResult.getBoolean("powerStatus"));
-						devices[i].setNotification(qResult.getBoolean("notificationStatus"));
+						int dNo = qResult.getInt("deviceNo");
+						devices[dNo].setId(qResult.getInt("id"));
+						devices[dNo].setName(qResult.getString("devicename"));
+						devices[dNo].setPower(qResult.getBoolean("powerStatus"));
+						devices[dNo].setNotification(qResult.getBoolean("notificationStatus"));
 						query = "select * from statistics where id = ?;";
 						preparedStatement = con.prepareStatement(query);
 						preparedStatement.setInt(1, qResult.getInt("deviceStatsId"));
@@ -486,22 +487,27 @@ public class DatabaseHandler {
 			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
 			if (con != null) {
 				System.out.println("createNewDevice: database is connected successfully");
-				String query = "insert into device(id, devicename, powerStatus, notificationStatus, deviceStatsId) values (?, ?, ?, ?, ?);";
-				PreparedStatement preparedStatement = con.prepareStatement(query);
-				preparedStatement.setInt(1, device.getId());
+				String query = "insert into device(deviceNo, devicename, powerStatus, notificationStatus, deviceStatsId) values (?, ?, ?, ?, ?);";
+				PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setInt(1, device.getDeviceNo());
 				preparedStatement.setString(2, device.getName());
-				preparedStatement.setBoolean(3, device.isON());
-				preparedStatement.setBoolean(4, device.isNotificationON());
+				preparedStatement.setBoolean(3, device.getPower());
+				preparedStatement.setBoolean(4, device.getNotification());
 				preparedStatement.setInt(5, statsid);
 				int affected = preparedStatement.executeUpdate();
 				if (affected > 0) {
-					query = "insert into RoomDevice(roomid, deviceid) values (?, ?);";
-					preparedStatement = con.prepareStatement(query);
-					preparedStatement.setInt(1, roomId);
-					preparedStatement.setInt(2, device.getId());
-					affected = preparedStatement.executeUpdate();
-					if (affected > 0) {
-						return true;
+					try (ResultSet deviceKeys = preparedStatement.getGeneratedKeys()) {
+						if (deviceKeys.next()) {
+							device.setId(deviceKeys.getInt(1));
+							query = "insert into RoomDevice(roomid, deviceid) values (?, ?);";
+							preparedStatement = con.prepareStatement(query);
+							preparedStatement.setInt(1, roomId);
+							preparedStatement.setInt(2, device.getId());
+							affected = preparedStatement.executeUpdate();
+							if (affected > 0) {
+								return true;
+							}
+						}
 					}
 				}
 				return false;
@@ -522,8 +528,8 @@ public class DatabaseHandler {
 				String query = "UPDATE device SET devicename = ?, powerStatus = ?, notificationStatus = ? WHERE id = ?;";
 				PreparedStatement preparedStatement = con.prepareStatement(query);
 				preparedStatement.setString(1, device.getName());
-				preparedStatement.setBoolean(2, device.isON());
-				preparedStatement.setBoolean(3, device.isNotificationON());
+				preparedStatement.setBoolean(2, device.getPower());
+				preparedStatement.setBoolean(3, device.getNotification());
 				preparedStatement.setInt(4, device.getId());
 				int affected = preparedStatement.executeUpdate();
 				if (affected > 0) {
@@ -537,6 +543,28 @@ public class DatabaseHandler {
 					if (affected > 0) {
 						return true;
 					}
+				}
+				return false;
+			}
+		} catch (Exception e) {
+			System.out.println("EXCEPTION >>> " + e);
+		}
+		return false;
+	}
+
+	public boolean deleteDevice(int deviceID) {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("deleteRoom: database is connected successfully");
+				String query = "DELETE FROM device WHERE id = ?;";
+				PreparedStatement preparedStatement = con.prepareStatement(query);
+				preparedStatement.setInt(1, deviceID);
+				int affected = preparedStatement.executeUpdate();
+				if (affected > 0) {
+					return true;
 				}
 				return false;
 			}

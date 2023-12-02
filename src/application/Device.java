@@ -1,14 +1,18 @@
 package application;
 
+import java.util.Random;
+
 public class Device {
 	private int id;
+	private int deviceNo;
 	private String name;
 	private boolean powerStatus;
 	private boolean notificationStatus;
 	private Statistics deviceStats;
 
-	public Device() {
+	public Device(int dNo) {
 		id = -1;
+		deviceNo = dNo;
 		name = "Empty Slot";
 		powerStatus = false;
 		notificationStatus = false;
@@ -31,7 +35,7 @@ public class Device {
 		this.name = name;
 	}
 
-	public boolean isON() {
+	public boolean getPower() {
 		return powerStatus;
 	}
 
@@ -41,7 +45,7 @@ public class Device {
 
 	}
 
-	public boolean isNotificationON() {
+	public boolean getNotification() {
 		return notificationStatus;
 	}
 
@@ -59,10 +63,32 @@ public class Device {
 		this.deviceStats = deviceStats;
 	}
 
+	public int getDeviceNo() {
+		return deviceNo;
+	}
+
+	public void setDeviceNo(int deviceNo) {
+		this.deviceNo = deviceNo;
+	}
+
+	public void simulate() {
+		if (powerStatus) {
+			if (deviceStats.getTemperature() < 110) {
+				deviceStats.setTemperature(deviceStats.getTemperature() + 0.3);
+			}
+			deviceStats.setPowerUsage(deviceStats.getPowerUsage() + Math.random() * 5);
+		} else {
+			if (deviceStats.getTemperature() > 0) {
+				deviceStats.setTemperature(deviceStats.getTemperature() - 0.15);
+			}
+		}
+		deviceStats.setHumidity(Math.random() * 105);
+	}
+
 	@Override
 	public String toString() {
 		if (id != -1)
-			return String.format("%s\n Temp(%f⁰C)   Humid(%f)", name, deviceStats.getTemperature(),
+			return String.format("%s\n Temp(%.2f⁰C)   Humid(%.2f)", name, deviceStats.getTemperature(),
 					deviceStats.getHumidity());
 		else
 			return String.format("%s", name);

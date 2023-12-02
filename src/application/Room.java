@@ -9,7 +9,7 @@ public class Room {
 
 	public Room() {
 		for (int i = 0; i < devices.length; i++) {
-			devices[i] = new Device();
+			devices[i] = new Device(i);
 		}
 	}
 
