@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import Homee.CollectiveStatistics;
@@ -29,6 +30,99 @@ public class DatabaseHandler {
 			dbHandler = new DatabaseHandler();
 		}
 		return dbHandler;
+	}
+
+	public User getUser(String cnic, String password) {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("getUser: database is connected successfully");
+				String query = "select * from users where cnic = ? and password = ?";
+				PreparedStatement preparedStatement = con.prepareStatement(query);
+				preparedStatement.setString(1, cnic);
+				preparedStatement.setString(2, password);
+				try {
+					ResultSet qResult = preparedStatement.executeQuery();
+					if (qResult.next()) {
+						User newUser = new User();
+						newUser.setId(qResult.getInt("id"));
+						newUser.setFirstName(qResult.getString("firstname"));
+						newUser.setLastName(qResult.getString("lastname"));
+						newUser.setCnic(cnic);
+						newUser.setPassword(password);
+						newUser.setBirthDate(qResult.getString("birthdate"));
+						return newUser;
+					}
+				} catch (SQLException e) {
+					System.out.println("EXCEPTION >>> " + e);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("EXCEPTION >>> " + e);
+		}
+		return null;
+	}
+
+	public User getUser(String cnic) {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("getUser by Cnic: database is connected successfully");
+				String query = "select * from users where cnic = ?;";
+				PreparedStatement preparedStatement = con.prepareStatement(query);
+				preparedStatement.setString(1, cnic);
+				try {
+					ResultSet qResult = preparedStatement.executeQuery();
+					if (qResult.next()) {
+						User newUser = new User();
+						newUser.setId(qResult.getInt("id"));
+						newUser.setFirstName(qResult.getString("firstname"));
+						newUser.setLastName(qResult.getString("lastname"));
+						newUser.setCnic(cnic);
+						newUser.setPassword("******");
+						newUser.setBirthDate(qResult.getString("birthdate"));
+						return newUser;
+					}
+				} catch (SQLException e) {
+					System.out.println("EXCEPTION >>> " + e);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("EXCEPTION >>> " + e);
+		}
+		return null;
+	}
+
+	public boolean updateUser(User user) {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("updateUser: database is connected successfully");
+				String query = "update users set firstname = ?, lastname = ?, birthdate = ?, password = ? where id = ? ;";
+				PreparedStatement preparedStatement = con.prepareStatement(query);
+				preparedStatement.setString(1, user.getFirstName());
+				preparedStatement.setString(2, user.getLastName());
+				preparedStatement.setString(3, user.getBirthDate());
+				preparedStatement.setString(4, user.getPassword());
+				preparedStatement.setInt(5, user.getId());
+				try {
+					int affected = preparedStatement.executeUpdate();
+					if (affected > 0)
+						return true;
+				} catch (SQLException e) {
+					System.out.println(e);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return false;
 	}
 
 	public boolean addNewUser(User user) {
@@ -59,73 +153,6 @@ public class DatabaseHandler {
 		return false;
 	}
 
-	public ArrayList<Room> getRooms(int dashID) {
-		Connection con = null;
-		try {
-			ArrayList<Room> rooms = new ArrayList<Room>();
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
-			if (con != null) {
-				System.out.println("getRooms: database is connected successfully");
-				String query = "select r.* from DashboardRoom dr " + " join room r on r.id = dr.roomid "
-						+ " where dr.dashboardid = ?;";
-				PreparedStatement preparedStatement = con.prepareStatement(query);
-				preparedStatement.setInt(1, dashID);
-				try {
-					ResultSet qResult = preparedStatement.executeQuery();
-					while (qResult.next()) {
-						Room currRoom = new Room();
-						currRoom.setId(qResult.getInt("id"));
-						currRoom.setTitle(qResult.getString("title"));
-						currRoom.setPowerStatus(qResult.getInt("powerStatus") == 1);
-						currRoom.setNotificationStatus(qResult.getInt("notificationStatus") == 1);
-						currRoom.setDevices(getDevices(currRoom.getId()));
-						rooms.add(currRoom);
-					}
-					return rooms;
-				} catch (SQLException e) {
-					System.out.println(e);
-				}
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return null;
-	}
-
-	public User getUser(String cnic, String password) {
-		Connection con = null;
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
-			if (con != null) {
-				System.out.println("getUser: database is connected successfully");
-				String query = "select * from users where cnic = ? and password = ?";
-				PreparedStatement preparedStatement = con.prepareStatement(query);
-				preparedStatement.setString(1, cnic);
-				preparedStatement.setString(2, password);
-				try {
-					ResultSet qResult = preparedStatement.executeQuery();
-					if (qResult.next()) {
-						User newUser = new User();
-						newUser.setId(qResult.getInt("id"));
-						newUser.setFirstName(qResult.getString("firstname"));
-						newUser.setFirstName(qResult.getString("lastname"));
-						newUser.setCnic(cnic);
-						newUser.setPassword(password);
-						newUser.setBirthDate(qResult.getString("birthdate"));
-						return newUser;
-					}
-				} catch (SQLException e) {
-					System.out.println("EXCEPTION >>> " + e);
-				}
-			}
-		} catch (Exception e) {
-			System.out.println("EXCEPTION >>> " + e);
-		}
-		return null;
-	}
-
 	public ArrayList<Pair<Integer, String>> getUserHomees(int userID) {
 		Connection con = null;
 		try {
@@ -144,6 +171,42 @@ public class DatabaseHandler {
 						homId.add(new Pair<Integer, String>(qResult.getInt("id"), qResult.getString("title")));
 					}
 					return homId;
+				} catch (SQLException e) {
+					System.out.println(e);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+
+	public ArrayList<User> getHomeeUsers(int homeeID) {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("getHomeeUsers: database is connected successfully");
+				String query = "select usr.* from userhomee uhom "
+						+ " join users usr on usr.id = uhom.userid where uhom.homeeid = ?;";
+				DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				PreparedStatement preparedStatement = con.prepareStatement(query);
+				preparedStatement.setInt(1, homeeID);
+				try {
+					ArrayList<User> users = new ArrayList<>();
+					ResultSet qResult = preparedStatement.executeQuery();
+					while (qResult.next()) {
+						User newuser = new User();
+						newuser.setId(qResult.getInt("id"));
+						newuser.setFirstName(qResult.getString("firstname"));
+						newuser.setLastName(qResult.getString("lastname"));
+						newuser.setBirthDate(qResult.getDate("birthDate").toLocalDate().format(dateFormat));
+						newuser.setCnic(qResult.getString("cnic"));
+						newuser.setPassword(qResult.getString("password"));
+						users.add(newuser);
+					}
+					return users;
 				} catch (SQLException e) {
 					System.out.println(e);
 				}
@@ -276,6 +339,28 @@ public class DatabaseHandler {
 		return -1;
 	};
 
+	public boolean addUserToHomee(int userID, int homeeID) {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("addUserToHomee: database is connected successfully");
+				String query = "insert into userhomee(userid, homeeid) values (?, ?);";
+				PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setInt(1, userID);
+				preparedStatement.setInt(2, homeeID);
+				int affected = preparedStatement.executeUpdate();
+				if (affected > 0) {
+					return true;
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("EXCEPTION >>> " + e);
+		}
+		return false;
+	}
+
 	public boolean createNewHomee(int userID, String title) {
 		int statid = insertIntoCollectiveStats();
 		if (statid == -1) {
@@ -300,12 +385,7 @@ public class DatabaseHandler {
 					try (ResultSet homeeKeys = preparedStatement.getGeneratedKeys()) {
 						if (homeeKeys.next()) {
 							int homeeID = homeeKeys.getInt(1);
-							query = "insert into userhomee(userid, homeeid) values (?, ?);";
-							preparedStatement = con.prepareStatement(query);
-							preparedStatement.setInt(1, userID);
-							preparedStatement.setInt(2, homeeID);
-							affected = preparedStatement.executeUpdate();
-							if (affected > 0) {
+							if (addUserToHomee(userID, homeeID)) {
 								return true;
 							}
 						}
@@ -317,6 +397,40 @@ public class DatabaseHandler {
 			System.out.println("EXCEPTION >>> " + e);
 		}
 		return false;
+	}
+
+	public ArrayList<Room> getRooms(int dashID) {
+		Connection con = null;
+		try {
+			ArrayList<Room> rooms = new ArrayList<Room>();
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("getRooms: database is connected successfully");
+				String query = "select r.* from DashboardRoom dr " + " join room r on r.id = dr.roomid "
+						+ " where dr.dashboardid = ?;";
+				PreparedStatement preparedStatement = con.prepareStatement(query);
+				preparedStatement.setInt(1, dashID);
+				try {
+					ResultSet qResult = preparedStatement.executeQuery();
+					while (qResult.next()) {
+						Room currRoom = new Room();
+						currRoom.setId(qResult.getInt("id"));
+						currRoom.setTitle(qResult.getString("title"));
+						currRoom.setPowerStatus(qResult.getInt("powerStatus") == 1);
+						currRoom.setNotificationStatus(qResult.getInt("notificationStatus") == 1);
+						currRoom.setDevices(getDevices(currRoom.getId()));
+						rooms.add(currRoom);
+					}
+					return rooms;
+				} catch (SQLException e) {
+					System.out.println(e);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 
 	public boolean createNewRoom(int dashId, String roomtitle) {

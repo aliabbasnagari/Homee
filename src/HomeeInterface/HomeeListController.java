@@ -41,6 +41,7 @@ public class HomeeListController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		loadData();
+		labelWelcome.setText("Welcome, " + homee.getCurrentUser().getFirstName());
 	}
 
 	private void loadData() {
@@ -85,6 +86,7 @@ public class HomeeListController implements Initializable {
 		try {
 			DatabaseHandler db = DatabaseHandler.getInstance();
 			if (db.populateDashboard(homee.getId())) {
+				homee.setUsers(db.getHomeeUsers(homee.getId()));
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("res/HomeScene.fxml"));
 				Parent root = loader.load();
 				Stage currentStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
