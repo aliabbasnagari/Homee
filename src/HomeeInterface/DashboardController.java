@@ -56,12 +56,13 @@ public class DashboardController implements Initializable {
 			labelPowerMode.setText("HYBRID");
 			labelPowerMode.getStyleClass().setAll("modeHybrid");
 		}
+		
+		lbUsgae.setText(String.format("%.3f (kW)", dboard.getFullStats().getPowerUsage()));
+		lbGridE.setText(String.format("%.3f (kW)",dboard.getFullStats().getGridEnergy()));
 
-		lbUsgae.setText(String.valueOf(dboard.getFullStats().getPowerUsage()) + " (kWh)");
-		lbGridE.setText(String.valueOf(dboard.getFullStats().getGridEnergy() + " (kW)"));
-		lbSolarE.setText(String.valueOf(dboard.getFullStats().getSolarEnergy()) + " (kW)");
-		lbTemperature.setText(String.valueOf(dboard.getFullStats().getTemperature()) + "⁰C");
-		lbHumidity.setText(String.valueOf(dboard.getFullStats().getHumidity()) + " (RH)");
+		lbSolarE.setText(String.format("%.3f (kW)",dboard.getFullStats().getSolarEnergy()));
+		lbTemperature.setText(String.format("%.3f⁰C",dboard.getFullStats().getTemperature()));
+		lbHumidity.setText(String.format("%.3f (RH)",dboard.getFullStats().getHumidity()));
 	}
 
 	// Event Listener on Button[#btnRooms].onAction
