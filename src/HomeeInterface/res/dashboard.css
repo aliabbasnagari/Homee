@@ -1,0 +1,11 @@
+.modeSolar {
+    -fx-text-fill: #4CAF50;
+}
+
+.modeHybrid {
+    -fx-text-fill: #FFC107;
+}
+
+.modeGrid {
+    -fx-text-fill:#21b1f3;
+}

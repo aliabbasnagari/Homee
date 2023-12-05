@@ -8,14 +8,24 @@ public class Homee {
 	private User currentUser;
 	private String title;
 	private ArrayList<User> users;
+	private ArrayList<Network> networks;
 	private Dashboard dashboard;
 	private Payment payment;
 
 	private Homee() {
 		currentUser = null;
 		users = new ArrayList<User>();
+		networks = new ArrayList<Network>();
 		dashboard = Dashboard.getInstance();
 		payment = new Payment();
+	}
+
+	public ArrayList<Network> getNetworks() {
+		return networks;
+	}
+
+	public void setNetworks(ArrayList<Network> networks) {
+		this.networks = networks;
 	}
 
 	public static Homee getInstance() {

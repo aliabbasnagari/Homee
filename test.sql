@@ -5,7 +5,6 @@ use homee;
 CREATE TABLE CollectiveStatistics (
     id INT PRIMARY KEY AUTO_INCREMENT,
     powerUsage DOUBLE,
-    powerSaved DOUBLE,
     temperature DOUBLE,
     humidity DOUBLE
 );
@@ -14,14 +13,30 @@ CREATE TABLE Dashboard (
     id INT PRIMARY KEY AUTO_INCREMENT,
     powerMode VARCHAR(255),
     fullStatsId INT,
-    FOREIGN KEY (fullStatsId) REFERENCES CollectiveStatistics(id)
+    FOREIGN KEY (fullStatsId) REFERENCES CollectiveStatistics(id) ON DELETE CASCADE
 );
 
 CREATE TABLE homee (
     id INT AUTO_INCREMENT PRIMARY KEY,
     dashboardId int,
     title varchar(255),
-    FOREIGN KEY (dashboardId) REFERENCES Dashboard(id)
+    FOREIGN KEY (dashboardId) REFERENCES Dashboard(id) ON DELETE CASCADE
+);
+
+create table network (
+	id  INT AUTO_INCREMENT PRIMARY KEY,
+	title varchar(255),
+	access varchar(255),
+	ip varchar(12),
+	live BIT
+);
+
+create table HomeeNet (
+	netid int,
+    homeeid int,
+    primary key (netid, homeeid),
+	FOREIGN KEY (netid) REFERENCES network(id) on delete cascade,
+    FOREIGN KEY (homeeid) REFERENCES Homee(id) on delete cascade
 );
 
 CREATE TABLE Users (
@@ -65,11 +80,12 @@ CREATE TABLE Statistics (
 
 CREATE TABLE Device (
     id INT PRIMARY KEY AUTO_INCREMENT,
+    deviceNo INT,
     devicename varchar(255),
     powerstatus bit,
     notificationstatus bit,
     deviceStatsId INT,
-    FOREIGN KEY (deviceStatsId) REFERENCES Statistics(id)
+    FOREIGN KEY (deviceStatsId) REFERENCES Statistics(id) ON DELETE CASCADE
 );
 
 CREATE TABLE RoomDevice (

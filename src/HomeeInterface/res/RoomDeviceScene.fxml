@@ -15,8 +15,8 @@
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity"
 	minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0"
-	prefWidth="1000.0" xmlns="http://javafx.com/javafx/21"
-	xmlns:fx="http://javafx.com/fxml/1"
+	prefWidth="1000.0" stylesheets="@roomdevices.css"
+	xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="HomeeInterface.RoomDeviceController">
 	<columnConstraints>
 		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
@@ -86,7 +86,7 @@
 									GridPane.halignment="CENTER" GridPane.rowIndex="1"
 									GridPane.valignment="CENTER">
 									<font>
-										<Font name="System Bold" size="12.0" />
+										<Font name="Roboto Bold" size="14.0" />
 									</font>
 								</Label>
 								<Button fx:id="btnP0" maxHeight="1.7976931348623157E308"
@@ -158,7 +158,7 @@
 									GridPane.halignment="CENTER" GridPane.rowIndex="1"
 									GridPane.valignment="CENTER">
 									<font>
-										<Font name="System Bold" size="12.0" />
+										<Font name="Roboto Bold" size="14.0" />
 									</font>
 								</Label>
 								<Button fx:id="btnP1" accessibleText="OFF"
@@ -225,7 +225,7 @@
 									GridPane.halignment="CENTER" GridPane.rowIndex="1"
 									GridPane.valignment="CENTER">
 									<font>
-										<Font name="System Bold" size="12.0" />
+										<Font name="Roboto Bold" size="14.0" />
 									</font>
 								</Label>
 								<Button fx:id="btnP2" accessibleText="OFF"
@@ -292,7 +292,7 @@
 									GridPane.halignment="CENTER" GridPane.rowIndex="1"
 									GridPane.valignment="CENTER">
 									<font>
-										<Font name="System Bold" size="12.0" />
+										<Font name="Roboto Bold" size="14.0" />
 									</font>
 								</Label>
 								<Button fx:id="btnP3" accessibleText="OFF"
@@ -359,7 +359,7 @@
 									GridPane.halignment="CENTER" GridPane.rowIndex="1"
 									GridPane.valignment="CENTER">
 									<font>
-										<Font name="System Bold" size="12.0" />
+										<Font name="Roboto Bold" size="14.0" />
 									</font>
 								</Label>
 								<Button fx:id="btnP4" accessibleText="OFF"
@@ -426,7 +426,7 @@
 									GridPane.halignment="CENTER" GridPane.rowIndex="1"
 									GridPane.valignment="CENTER">
 									<font>
-										<Font name="System Bold" size="12.0" />
+										<Font name="Roboto Bold" size="14.0" />
 									</font>
 								</Label>
 								<Button fx:id="btnP5" accessibleText="OFF"
@@ -493,7 +493,7 @@
 									GridPane.halignment="CENTER" GridPane.rowIndex="1"
 									GridPane.valignment="CENTER">
 									<font>
-										<Font name="System Bold" size="12.0" />
+										<Font name="Roboto Bold" size="14.0" />
 									</font>
 								</Label>
 								<Button fx:id="btnP6" accessibleText="OFF"
@@ -560,7 +560,7 @@
 									GridPane.halignment="CENTER" GridPane.rowIndex="1"
 									GridPane.valignment="CENTER">
 									<font>
-										<Font name="System Bold" size="12.0" />
+										<Font name="Roboto Bold" size="14.0" />
 									</font>
 								</Label>
 								<Button fx:id="btnP7" accessibleText="OFF"
@@ -627,7 +627,7 @@
 									GridPane.halignment="CENTER" GridPane.rowIndex="1"
 									GridPane.valignment="CENTER">
 									<font>
-										<Font name="System Bold" size="12.0" />
+										<Font name="Roboto Bold" size="14.0" />
 									</font>
 								</Label>
 								<Button fx:id="btnP8" accessibleText="OFF"
@@ -708,6 +708,9 @@
 									<GridPane.margin>
 										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 									</GridPane.margin>
+									<font>
+										<Font name="Roboto" size="14.0" />
+									</font>
 								</Button>
 								<Button maxHeight="1.7976931348623157E308"
 									maxWidth="1.7976931348623157E308" mnemonicParsing="false"
@@ -715,17 +718,23 @@
 									<GridPane.margin>
 										<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 									</GridPane.margin>
+									<font>
+										<Font name="Roboto" size="14.0" />
+									</font>
 								</Button>
 							</children>
 						</GridPane>
 						<Button fx:id="btnAddRoom"
 							maxHeight="1.7976931348623157E308"
 							maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-							onAction="#actionGotoAddRoom" text="Add New Room"
-							GridPane.halignment="CENTER">
+							onAction="#actionGotoAddRoom" styleClass="btnAddRoom"
+							text="Add New Room" textFill="WHITE" GridPane.halignment="CENTER">
 							<GridPane.margin>
 								<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
 							</GridPane.margin>
+							<font>
+								<Font name="Roboto" size="14.0" />
+							</font>
 						</Button>
 					</children>
 				</GridPane>
@@ -736,11 +745,19 @@
 				<Button layoutX="688.0" layoutY="32.0"
 					mnemonicParsing="false" onAction="#actionEditRoom" prefWidth="80.0"
 					text="Edit" AnchorPane.bottomAnchor="25.0"
-					AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="25.0" />
+					AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="25.0">
+					<font>
+						<Font name="Roboto" size="14.0" />
+					</font>
+				</Button>
 				<Button layoutX="914.0" layoutY="32.0"
 					mnemonicParsing="false" onAction="#actionDeleteRoom"
 					prefWidth="80.0" text="Delete" AnchorPane.bottomAnchor="25.0"
-					AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
+					AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+					<font>
+						<Font name="Roboto" size="14.0" />
+					</font>
+				</Button>
 				<TextField fx:id="tfRoomTitle" editable="false"
 					layoutX="179.0" layoutY="32.0" promptText="Room Title"
 					AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="100.0"

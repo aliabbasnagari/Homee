@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import Homee.CollectiveStatistics;
 import Homee.Dashboard;
 import Homee.Device;
+import Homee.Network;
 import Homee.Room;
 import Homee.User;
 
@@ -233,7 +234,6 @@ public class DatabaseHandler {
 						CollectiveStatistics c = CollectiveStatistics.getInstance();
 						c.setId(qResult.getInt("id"));
 						c.setPowerUsage(qResult.getDouble("powerUsage"));
-						c.setPowerSaved(qResult.getDouble("powerSaved"));
 						c.setTemperature(qResult.getDouble("temperature"));
 						c.setHumidity(qResult.getDouble("humidity"));
 					}
@@ -286,10 +286,11 @@ public class DatabaseHandler {
 			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
 			if (con != null) {
 				System.out.println("insertIntoCollectiveStats: database is connected successfully");
-				String query = "insert into collectivestatistics(powerUsage, powerSaved) values (?, ?);";
+				String query = "insert into collectivestatistics(powerUsage, temperature, humidity) values (?, ?, ?);";
 				PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 				preparedStatement.setDouble(1, 0);
 				preparedStatement.setDouble(2, 0);
+				preparedStatement.setDouble(3, 0);
 				try {
 					int affected = preparedStatement.executeUpdate();
 					if (affected > 0) {
@@ -337,6 +338,28 @@ public class DatabaseHandler {
 			System.out.println("EXCEPTION >>> " + e);
 		}
 		return -1;
+	};
+
+	public boolean updateDashboard(int dashId, String powerMode) {
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("updateDashboard: database is connected successfully");
+				String query = "update dashboard set powerMode = ? where id = ?;";
+				PreparedStatement preparedStatement = con.prepareStatement(query);
+				preparedStatement.setString(1, powerMode);
+				preparedStatement.setDouble(2, dashId);
+				int affected = preparedStatement.executeUpdate();
+				if (affected > 0) {
+					return true;
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("EXCEPTION >>> " + e);
+		}
+		return false;
 	};
 
 	public boolean addUserToHomee(int userID, int homeeID) {
@@ -690,6 +713,81 @@ public class DatabaseHandler {
 			}
 		} catch (Exception e) {
 			System.out.println("EXCEPTION >>> " + e);
+		}
+		return false;
+	}
+
+	public ArrayList<Network> getNetwork(int homeeID) {
+		Connection con = null;
+		try {
+			ArrayList<Network> networks = new ArrayList<Network>();
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("getNetwork: database is connected successfully");
+				String query = "select n.* from HomeeNet hn join network n on n.id = hn.netid "
+						+ " where hn.homeeid = ?;";
+				PreparedStatement preparedStatement = con.prepareStatement(query);
+				preparedStatement.setInt(1, homeeID);
+				try {
+					ResultSet qResult = preparedStatement.executeQuery();
+					while (qResult.next()) {
+						Network net = new Network();
+						net.setId(qResult.getInt("id"));
+						net.setTitle(qResult.getString("title"));
+						net.setIp(qResult.getString("ip"));
+						net.setAccess(qResult.getString("access"));
+						net.setLive(qResult.getBoolean("live"));
+						networks.add(net);
+					}
+					return networks;
+				} catch (SQLException e) {
+					System.out.println(e);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+
+	public boolean addNetwork(int homeeID, Network net) {
+		Connection con = null;
+		try {
+			ArrayList<Network> networks = new ArrayList<Network>();
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = (Connection) DriverManager.getConnection(mysql_url, mysql_username, mysql_password);
+			if (con != null) {
+				System.out.println("addNetwork: database is connected successfully");
+				String query = "insert into network(title, access, ip, live) values (?, ?, ?, ?);";
+				PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setString(1, net.getTitle());
+				preparedStatement.setString(2, net.getAccess());
+				preparedStatement.setString(3, net.getIp());
+				preparedStatement.setBoolean(4, net.isLive());
+				try {
+					int affected = preparedStatement.executeUpdate();
+					if (affected > 0) {
+						try (ResultSet deviceKeys = preparedStatement.getGeneratedKeys()) {
+							if (deviceKeys.next()) {
+								int netid = deviceKeys.getInt(1);
+								query = "insert into HomeeNet(netid, homeeid) values (?, ?);";
+								preparedStatement = con.prepareStatement(query);
+								preparedStatement.setInt(1, netid);
+								preparedStatement.setInt(2, homeeID);
+								affected = preparedStatement.executeUpdate();
+								if (affected > 0) {
+									return true;
+								}
+							}
+						}
+					}
+				} catch (SQLException e) {
+					System.out.println(e);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 		return false;
 	}

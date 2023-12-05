@@ -76,7 +76,7 @@ public class Device {
 			}
 			deviceStats.setPowerUsage(deviceStats.getPowerUsage() + Math.random() * 5);
 		} else {
-			if (deviceStats.getTemperature() > 0) {
+			if (deviceStats.getTemperature() >= 0.15) {
 				deviceStats.setTemperature(deviceStats.getTemperature() - 0.15);
 			}
 		}

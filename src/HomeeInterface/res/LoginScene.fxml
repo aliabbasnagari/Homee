@@ -7,24 +7,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0"
-	prefWidth="1000.0" scaleShape="false"
-	xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="HomeeInterface.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" scaleShape="false" stylesheets="@login.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HomeeInterface.LoginController">
 	<children>
-		<TextField fx:id="tfCnic" layoutX="414.0" layoutY="247.0"
-			prefHeight="44.0" prefWidth="254.0" promptText="xxxxx-xxxxxxx-x"
-			text="12345-1234567-1">
+		<TextField fx:id="tfCnic" layoutX="414.0" layoutY="247.0" prefHeight="44.0" prefWidth="254.0" promptText="xxxxx-xxxxxxx-x">
 			<font>
 				<Font size="20.0" />
 			</font>
 		</TextField>
-		<Button fx:id="btnLogin" alignment="CENTER"
-			contentDisplay="CENTER" layoutX="487.0" layoutY="446.0"
-			mnemonicParsing="false" onAction="#actionLogin"
-			style="-fx-background-color: #4ba0e1;" text="Login"
-			textAlignment="CENTER" textFill="WHITE">
+		<Button fx:id="btnLogin" alignment="CENTER" contentDisplay="CENTER" layoutX="400.0" layoutY="419.0" mnemonicParsing="false" onAction="#actionLogin" prefWidth="200.0" styleClass="btnLogin" text="Login" textAlignment="CENTER" textFill="WHITE">
 			<font>
 				<Font name="Serif Regular" size="27.0" />
 			</font>
@@ -34,26 +24,22 @@
 				<Font size="23.0" />
 			</font>
 		</Label>
-		<Label layoutX="250.0" layoutY="366.0" text="PASSWORD">
+		<Label layoutX="250.0" layoutY="327.0" text="PASSWORD">
 			<font>
 				<Font size="23.0" />
 			</font>
 		</Label>
-		<Label layoutX="427.0" layoutY="67.0" text="HOMEE"
-			textAlignment="CENTER" textFill="#1865c9">
+		<Label layoutX="427.0" layoutY="67.0" text="HOMEE" textAlignment="CENTER" textFill="#0090e0">
 			<font>
 				<Font name="Tahoma Bold" size="40.0" />
 			</font>
 		</Label>
-		<PasswordField fx:id="tfPassword" layoutX="414.0"
-			layoutY="355.0" prefHeight="44.0" prefWidth="254.0" text="11111">
+		<PasswordField fx:id="tfPassword" layoutX="414.0" layoutY="316.0" prefHeight="44.0" prefWidth="254.0" promptText="password">
 			<font>
 				<Font size="20.0" />
 			</font>
 		</PasswordField>
-		<Label layoutX="373.0" layoutY="650.0"
-			text="Do not have an account? create one now" />
-		<Button layoutX="604.0" layoutY="646.0" mnemonicParsing="false"
-			onAction="#actionGotoSignup" text="Signup" />
+		<Label layoutX="373.0" layoutY="650.0" text="Do not have an account? create one now" />
+		<Button layoutX="604.0" layoutY="646.0" mnemonicParsing="false" onAction="#actionGotoSignup" text="Signup" />
 	</children>
 </AnchorPane>

@@ -1,15 +1,18 @@
 package Homee;
 
+import java.util.ArrayList;
+
 public class CollectiveStatistics extends Statistics {
 	private static CollectiveStatistics _stats;
 	private int id;
-	private double powerUsage;
-	private double powerSaved;
+	private double solarEnergy;
+	private double gridEnergy;
 
 	private CollectiveStatistics() {
 		id = -1;
-		powerSaved = 0.0;
-		powerUsage = 0.0;
+		super.setPowerUsage(0);
+		super.setHumidity(0);
+		super.setTemperature(0);
 	}
 
 	public static CollectiveStatistics getInstance() {
@@ -17,6 +20,22 @@ public class CollectiveStatistics extends Statistics {
 			_stats = new CollectiveStatistics();
 		}
 		return _stats;
+	}
+
+	public double getSolarEnergy() {
+		return solarEnergy;
+	}
+
+	public void setSolarEnergy(double solarEnergy) {
+		this.solarEnergy = solarEnergy;
+	}
+
+	public double getGridEnergy() {
+		return gridEnergy;
+	}
+
+	public void setGridEnergy(double gridEnergy) {
+		this.gridEnergy = gridEnergy;
 	}
 
 	public int getId() {
@@ -27,20 +46,16 @@ public class CollectiveStatistics extends Statistics {
 		this.id = id;
 	}
 
-	public double getPowerUsage() {
-		return powerUsage;
+	public void refresh(ArrayList<Room> rooms) {
+		super.setPowerUsage(0);
+		this.setTemperature(Math.random() * 100);
+		this.setHumidity(Math.random() * 100);
+		this.gridEnergy = (Math.random() * 25);
+		this.solarEnergy = (Math.random() * 10);
+		for (Room rm : rooms) {
+			for (Device dv : rm.getDevices()) {
+				super.setPowerUsage(super.getPowerUsage() + dv.getDeviceStats().getPowerUsage());
+			}
+		}
 	}
-
-	public void setPowerUsage(Double powerUsage) {
-		this.powerUsage = powerUsage;
-	}
-
-	public double getPowerSaved() {
-		return powerSaved;
-	}
-
-	public void setPowerSaved(Double powerSaved) {
-		this.powerSaved = powerSaved;
-	}
-
 }

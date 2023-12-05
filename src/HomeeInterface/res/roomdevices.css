@@ -1,0 +1,7 @@
+.btnAddRoom {
+    -fx-background-color: rgb(87, 170, 71);
+}
+
+.btnAddRoom:hover {
+    -fx-background-color: rgb(33, 90, 21);
+}

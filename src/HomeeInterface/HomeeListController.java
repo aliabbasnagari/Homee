@@ -87,6 +87,7 @@ public class HomeeListController implements Initializable {
 			DatabaseHandler db = DatabaseHandler.getInstance();
 			if (db.populateDashboard(homee.getId())) {
 				homee.setUsers(db.getHomeeUsers(homee.getId()));
+				homee.setNetworks(db.getNetwork(homee.getId()));
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("res/HomeScene.fxml"));
 				Parent root = loader.load();
 				Stage currentStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
