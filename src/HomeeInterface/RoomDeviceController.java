@@ -264,6 +264,9 @@ public class RoomDeviceController implements Initializable {
 			powerBtn.setText("ON");
 			selectedRoom.getDevices()[btnID].setPower(true);
 		}
+		if (selectedRoom.getDevices()[btnID].getNotification()) {
+			new HomeeAlerts(new SuccessAlert(null, "Device Alert", "Device " + selectedRoom.getDevices()[btnID].getName() + " turnded " + powerBtn.getText()));
+		}
 		DatabaseHandler.getInstance().updateDevice(selectedRoom.getDevices()[btnID]);
 	}
 

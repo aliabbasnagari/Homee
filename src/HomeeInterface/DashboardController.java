@@ -56,13 +56,17 @@ public class DashboardController implements Initializable {
 			labelPowerMode.setText("HYBRID");
 			labelPowerMode.getStyleClass().setAll("modeHybrid");
 		}
-		
-		lbUsgae.setText(String.format("%.3f (kW)", dboard.getFullStats().getPowerUsage()));
-		lbGridE.setText(String.format("%.3f (kW)",dboard.getFullStats().getGridEnergy()));
+		simulateStats();
+	}
 
-		lbSolarE.setText(String.format("%.3f (kW)",dboard.getFullStats().getSolarEnergy()));
-		lbTemperature.setText(String.format("%.3f⁰C",dboard.getFullStats().getTemperature()));
-		lbHumidity.setText(String.format("%.3f (RH)",dboard.getFullStats().getHumidity()));
+	private void simulateStats() {
+		double gridUsage = (dboard.getPowerMode().equals("SOLAR")) ? 0 : (Math.random() * 25);
+		double solarUsage = (dboard.getPowerMode().equals("GRID")) ? 0 : (Math.random() * 25);
+		lbUsgae.setText(String.format("%.3f (kW)", dboard.getFullStats().getPowerUsage()));
+		lbGridE.setText(String.format("+%.3f (kW)   -%.3f (kW)", dboard.getFullStats().getGridEnergy(), gridUsage));
+		lbSolarE.setText(String.format("+%.3f (kW)   -%.3f (kW)", dboard.getFullStats().getSolarEnergy(), solarUsage));
+		lbTemperature.setText(String.format("%.3f⁰C", dboard.getFullStats().getTemperature()));
+		lbHumidity.setText(String.format("%.3f (RH)", dboard.getFullStats().getHumidity()));
 	}
 
 	// Event Listener on Button[#btnRooms].onAction
@@ -89,6 +93,8 @@ public class DashboardController implements Initializable {
 		labelPowerMode.setText("GRID");
 		labelPowerMode.getStyleClass().setAll("modeGrid");
 		DatabaseHandler.getInstance().updateDashboard(dboard.getId(), "GRID");
+		dboard.setPowerMode("GRID");
+		simulateStats();
 	}
 
 	@FXML
@@ -96,6 +102,8 @@ public class DashboardController implements Initializable {
 		labelPowerMode.setText("SOLAR");
 		labelPowerMode.getStyleClass().setAll("modeSolar");
 		DatabaseHandler.getInstance().updateDashboard(dboard.getId(), "SOLAR");
+		dboard.setPowerMode("SOLAR");
+		simulateStats();
 	}
 
 	@FXML
@@ -103,6 +111,8 @@ public class DashboardController implements Initializable {
 		labelPowerMode.setText("HYBRID");
 		labelPowerMode.getStyleClass().setAll("modeHybrid");
 		DatabaseHandler.getInstance().updateDashboard(dboard.getId(), "HYBRID");
+		dboard.setPowerMode("HYBRID");
+		simulateStats();
 	}
 
 	@FXML
