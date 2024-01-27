@@ -20,7 +20,7 @@ public class DatabaseHandler {
 	private static DatabaseHandler dbHandler;
 	private String mysql_url = "jdbc:mysql://localhost:3306/homee";
 	private String mysql_username = "root";
-	private String mysql_password = "1234";
+	private String mysql_password = "123abc";
 
 	private DatabaseHandler() {
 		// TODO: if required
